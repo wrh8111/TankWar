@@ -67,7 +67,7 @@ public class Tank {
 	}
 
 	public Dir dir = Dir.STOP;
-	private Dir ptdir = Dir.D;
+	public Dir ptdir = Dir.D;
 
 	public Tank(int x, int y, boolean good) {
 		this.x = x;
@@ -208,7 +208,7 @@ public class Tank {
 			dir = Dir.STOP;
 		
 		if(dir!=oldDir){
-			TankMoveMsg msg = new TankMoveMsg(id,x,y, dir);
+			TankMoveMsg msg = new TankMoveMsg(id,x,y, dir,ptdir);
 			tc.nc.send(msg);
 		}
 	}

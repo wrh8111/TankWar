@@ -12,6 +12,8 @@ public class NetClient {
 	private static int UDP_PORT_START = 2226;
 	private int udpPort;
 
+	String serverIP;
+	
 	public int getUdpPort() {
 		return udpPort;
 	}
@@ -28,6 +30,7 @@ public class NetClient {
 	}
 
 	public void connection(String ipAddress, int port) {
+		this.serverIP=ipAddress;
 		try {
 			ds = new DatagramSocket(udpPort);
 		} catch (SocketException e) {
@@ -66,7 +69,7 @@ public class NetClient {
 	}
 
 	public void send(Msg msg) {
-		msg.send(ds, "127.0.0.1", TankServer.UDP_PORT);
+		msg.send(ds, serverIP, TankServer.UDP_PORT);
 	}
 
 	private class UDPRecvThread implements Runnable {

@@ -58,6 +58,8 @@ public class MissileDeadMsg implements Msg {
 				m=tc.missiles.get(i);
 				if(m.getTankId()==tankId&&m.getId()==id){
 					m.setLive(false);
+					tc.explodes.add(new Explode(m.x,m.y,tc));
+					break;
 				}
 			}
 			

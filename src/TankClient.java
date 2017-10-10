@@ -9,7 +9,7 @@ public class TankClient extends Frame {
 	Image offScreenImage = null;
 	public static final int GAME_WIDTH = 800;
 	public static final int GAME_HEIGHT = 600;
-
+	
 	Tank myTank = new Tank(50, 50, true,Dir.STOP, this);
 	List<Missile> missiles = new ArrayList<Missile>();
 	List<Explode> explodes = new ArrayList<Explode>();

@@ -13,14 +13,16 @@ public class TankMoveMsg implements Msg {
 	private TankClient tc;
 	private int id;
 	private Dir dir;
+	private Dir ptdir;
 
 	private int x, y;
 
-	public TankMoveMsg(int id, int x, int y, Dir dir) {
+	public TankMoveMsg(int id, int x, int y, Dir dir,Dir ptdir) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.ptdir=ptdir;
 	}
 
 	public TankMoveMsg(TankClient tc) {
@@ -37,6 +39,7 @@ public class TankMoveMsg implements Msg {
 			dos.writeInt(x);
 			dos.writeInt(y);
 			dos.writeInt(dir.ordinal());
+			dos.writeInt(ptdir.ordinal());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -62,6 +65,7 @@ public class TankMoveMsg implements Msg {
 			int x = dis.readInt();
 			int y = dis.readInt();
 			Dir dir = Dir.values()[dis.readInt()];
+			Dir ptdir = Dir.values()[dis.readInt()];
 			boolean exist = false;
 			for (int i = 0; i < tc.tanks.size(); i++) {
 				Tank t = tc.tanks.get(i);
@@ -69,6 +73,7 @@ public class TankMoveMsg implements Msg {
 					t.setX(x);
 					t.setY(y);
 					t.dir = dir;
+					t.ptdir=ptdir;
 					exist = true;
 					break;
 				}
