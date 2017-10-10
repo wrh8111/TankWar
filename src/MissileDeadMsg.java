@@ -7,18 +7,20 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 
-public class TankDeadMsg implements Msg {
+public class MissileDeadMsg implements Msg {
 	
 	private int tankId;
+	private int id;
 	private TankClient tc = null;
-	private int msgType =Msg.TANK_DEAD_MSG; 
+	private int msgType =Msg.MISSILE_DEAD_MSG; 
 
-	public TankDeadMsg(TankClient tc) {
+	public MissileDeadMsg(TankClient tc) {
 		this.tc = tc;
 	}
 
-	public TankDeadMsg(int tankId){
+	public MissileDeadMsg(int tankId,int id){
 		this.tankId=tankId;
+		this.id=id;
 	}
 	
 	
@@ -30,6 +32,7 @@ public class TankDeadMsg implements Msg {
 		try {
 			dos.writeInt(msgType);
 			dos.writeInt(tankId);
+			dos.writeInt(id);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,21 +50,15 @@ public class TankDeadMsg implements Msg {
 	@Override
 	public void parse(DataInputStream dis) {
 		try {
+			int tankId = dis.readInt();
 			int id = dis.readInt();
-			if(id==tc.myTank.getId()){
-				return;
-			}
-			boolean exist = false;
-			Tank tank = null;
-			for(int i=0;i<tc.tanks.size();i++){
-				tank=tc.tanks.get(i);
-				if(tank.getId()==id){
-					exist = true;
-					break;
+			
+			Missile m = null;
+			for(int i=0;i<tc.missiles.size();i++){
+				m=tc.missiles.get(i);
+				if(m.getTankId()==tankId&&m.getId()==id){
+					m.setLive(false);
 				}
-			}
-			if(exist){
-				tank.setLive(false);
 			}
 			
 		} catch (IOException e) {

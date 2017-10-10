@@ -11,6 +11,17 @@ public class Missile {
 	public static final int YSPEED = 10;
 	public static final int WIDTH = 10;
 	public static final int HEIGHT = 10;
+	private static int ID=1;
+	
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	private int tankId;
 	public int getTankId() {
@@ -22,6 +33,10 @@ public class Missile {
 	}
 
 	private boolean live = true;
+	public void setLive(boolean live) {
+		this.live = live;
+	}
+
 	private TankClient tc;
 	private boolean good;
 
@@ -37,17 +52,18 @@ public class Missile {
 		return live;
 	}
 
-	public Missile(int tankId,int x, int y, Dir dir) {
+	public Missile(int tankId,int x, int y,boolean good, Dir dir) {
 		this.tankId=tankId;
 		this.x = x;
 		this.y = y;
+		this.good=good;
 		this.dir = dir;
+		this.id=ID++;
 	}
 
 	public Missile(int tankId,int x, int y, Dir dir,boolean good, TankClient tc) {
-		this(tankId,x, y, dir);
+		this(tankId,x, y,good, dir);
 		this.tc = tc;
-		this.good=good;
 	}
 
 	public void draw(Graphics g) {
